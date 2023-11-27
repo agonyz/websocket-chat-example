@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  client:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./packages/client:/usr/src/app
+      - ./packages/client/node_modules:/usr/src/app/node_modules
+
+  server:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./packages/server:/svr/app
+      - ./packages/server/node_modules:/svr/app/node_modules
