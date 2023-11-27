@@ -25,10 +25,21 @@ const App: React.FC = () => {
       setMessages((prevMessages) => [...prevMessages, systemMessage]);
     });
 
+    // set up event listener for user disconnecting from the chat
+    socket.on('user-disconnected', (data: { user: string, color: string }) => {
+      const systemMessage = {
+        sender: 'System',
+        message: `${data.user} disconnected from the room.`,
+        color: data.color
+      }
+      setMessages((prevMessages) => [...prevMessages, systemMessage]);
+    });
+
     // clean up the event listener when the component unmounts - important to not send events multiple times
     return () => {
       socket.off('chat-message');
       socket.off('user-joined');
+      socket.off('user-disconnected');
     };
   }, []);
 

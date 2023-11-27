@@ -17,6 +17,7 @@ io.on('connection', (socket: Socket) => {
 
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected`);
+        socket.broadcast.emit('user-disconnected', { user: socket.id, color: '#D2042D' });
     });
 
     // emit a message to all clients when a user joins (except the joining user)
